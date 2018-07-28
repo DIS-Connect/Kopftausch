@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <!-- Materialize CSS -->
+    <% include templates/includeCSS.ejs%>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+
+    <title>Kopftausch ARG</title>
+</head>
+
+<body>
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+        <div id="kopftausch">
+            <a>Kopftausch</a>
+        </div>
+
+    </div>
+    <div class="nav-content">
+        <ul class="tabs tabs-transparent">
+            <li class="tab" ><a href="settings">Einstellungen</a></li>
+            <li class="tab" ><a class="onsite">Matches</a></li>
+            <li class="tab" style="float:right"><a href="/logout">Abmelden</a></li>
+        </ul>
+    </div>
+</nav>
+<main>
+<!-- DYNAMIC -->
+<div class="dynamic" id="dynamic-content">
+    <table id="kurstabelle" class="mitte">
+
+        <thead>
+
+        <tr>
+            <th style="text-align: center">Wunschfach</th>
+            <th style="text-align: center">Tauschlehrer</th>
+            <th style="text-align: center">Tauschpartner</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% tausche.forEach(function(tausch){ %>
+        <tr>
+            <td style="text-align: center">
+                <%= tausch.Fach %>
+            </td>
+            <td style="text-align: center">
+                <%= tausch.wunschlehrer %>
+            </td >
+            <td style="text-align: center">
+                <%= tausch.tauschpartner %>
+            </td >
+
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+</main>
+
+
+
+
+
+<% include templates/footer.ejs%>
+
+<!-- Skripte -->
+<script src="jquery-3.3.1.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script> -->
+
+
+</body>
+
+</html>

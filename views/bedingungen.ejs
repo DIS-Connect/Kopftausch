@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+
+    <% include templates/includeCSS.ejs %>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+
+    <title>Kopftausch ARG</title>
+</head>
+<body>
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+        <div id="kopftausch"><a>Kopftausch</a></div>
+    </div>
+    <div class="nav-content">
+        <ul class="tabs tabs-transparent">
+
+            <li class="tab onsite"><a>Bedingungen</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="row">
+        <form action="/login" method="post">
+            <div class="card lighten-1 darken-1" id="info">
+                <div class="card-content black-text">
+                    <div style="text-align: left">
+                        <p>
+                            <label>
+                                <input id="1" type="checkbox" class="checkboxes"/>
+                                <span>Hiermit willige ich in die Verarbeitung personenbezogener Daten ein, wie sie in der <a href="/privacy_policy">Datenschutzerklärung</a> dargelegt sind.</span>
+                            </label>
+                        </p>
+                        <br>
+                        <p>
+                            <label>
+                                <input id="2" type="checkbox" class="checkboxes"/>
+                                <span>Mit der Nutzung unserer Internetanwendung erklären Sie sich mit unseren <a href="/terms_of_use">Nutzungsbedingungen</a> einverstanden.</span>
+                            </label>
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>     <!-- Anmeldebox -->
+
+
+</main>
+<% include templates/footer.ejs %>
+<!-- Skripte -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script> -->
+<% include templates/javascript.ejs %>
+
+<script>
+    $(".checkboxes").click(function () {
+
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/settings/firstlogin',
+            data:{"cb1":document.getElementById('1').checked, "cb2":document.getElementById('2').checked},
+            success: (data) => {
+                    window.location = "/settings";
+            },
+            error: (err) => {
+
+
+            }
+        });
+
+
+    })
+
+</script>
+</body>
+</html>
+
+

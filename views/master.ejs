@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+
+    <% include templates/includeCSS.ejs %>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+
+    <title>Kopftausch ARG</title>
+</head>
+
+<body>
+
+
+<main>
+    <% users.forEach(function(user){ %>
+    <% if(user.nick !== ""){%>
+    <%= user.nick %>
+    <%= user.userid %>
+
+    <% user.tauschData.forEach(function(fach){ %>|
+    <%= fach.lehrer.split("_")[1] %>:
+    <%= fach.lehrer.split("_")[0] %>
+    =>
+    <% fach.wunsch.forEach(function(wunsch){ %>
+    <%= wunsch.split("_")[0] %>,
+    <% }); %>|
+    <% }); %>
+    <br>
+    <hr />
+    <% }else {}%>
+    <% }); %>
+
+
+
+
+    <h5 style="display: inline">online users: </h5 ><h5 id="count" style="display: inline"></h5>
+    <input type="text" id="onlineusers">
+    <button class="btn" id="refresh">refresh</button>
+
+    <h4>Send Messages</h4>
+    <div class="row">
+        <form class="col s12">
+
+            <div class="row">
+                <div class="col s12">
+                    <div class="input-field inline">
+                        <input id="user" type="text" class="validate" value="user">
+                        <label for="user">User</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="message" type="text" class="validate">
+                    <label for="message">Message</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <a class="waves-effect waves-light btn-large" id="send">Send</a>
+
+
+</main>
+
+
+<!-- Skripte -->
+<script src="jquery-3.3.1.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script> -->
+
+<% include templates/javascript.ejs %>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        $("#send").click(function(){
+            sendMessage();
+    });
+
+        $("#refresh").click(function(){
+            checkusers();
+        });
+    });
+
+    function sendMessage(){
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/settings/sendmessage',
+            data:{user:$("#user").val()+"", message:$("#message").val()},
+            success: (data) => {
+
+
+            },
+            error: (err) => {
+
+                console.log('Fehler aufgetreten: ', err);
+            }
+        });
+
+        $("#user").val("user");
+        $("#message").val("");
+    }
+
+    function checkusers(){
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/settings/getuser',
+            success: (data) => {
+                $("#onlineusers").val(data);
+                console.log(data);
+                $("#count").html(data.length +"");
+            },
+            error: (err) => {
+
+
+            }
+        });
+    }
+</script>
+</body>
+</html>

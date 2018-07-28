@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# These environment variables are sometimes needed by the running daemons
+export USER=connect
+export HOME=/home/connect
+export PORT=61934
+# Include the user-specific profile
+source $HOME/.bash_profile
+
+# Now let's go!
+exec /package/host/localhost/nodejs-8/bin/node ~/kopftausch/bin/www.js 2>&1

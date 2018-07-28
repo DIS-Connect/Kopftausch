@@ -1,0 +1,109 @@
+{
+
+  "Kurse": [
+    {
+        "Fach":"Mathe",
+        "Kuerzel":"M",
+        "Idlehrer":"mathelehrer",
+        "Idwunsch":"mathewunsch",
+        "Lehrer": [
+          {"Lehrer": "GI"},
+          {"Lehrer": "HÖ"},
+          {"Lehrer": "DU"},
+          {"Lehrer": "ZI"}
+        ]
+    }
+
+  ,
+    {
+      "Fach":"Deutsch",
+      "Kuerzel":"D",
+      "Idlehrer":"deutschlehrer",
+      "Idwunsch":"deutschwunsch",
+      "Lehrer": [
+        {"Lehrer": "KO"},
+        {"Lehrer": "SM"},
+        {"Lehrer": "LO"},
+        {"Lehrer": "PH"}
+      ]
+    }
+  ,
+    {
+      "Fach":"Englisch",
+      "Kuerzel":"E",
+      "Idlehrer":"englischlehrer",
+      "Idwunsch":"englischwunsch",
+      "Lehrer": [
+        {"Lehrer": "KO"},
+        {"Lehrer": "SM"},
+        {"Lehrer": "LO"}
+      ]
+    }
+  ,
+    {
+      "Fach":"Chemie",
+      "Kuerzel":"C",
+      "Idlehrer":"chemielehrer",
+      "Idwunsch":"chemiewunsch",
+      "Lehrer": [
+        {"Lehrer": "EI"},
+        {"Lehrer": "BI"},
+        {"Lehrer": "GF"},
+        {"Lehrer": "VE"}
+      ]
+    }
+  ,
+    {
+      "Fach":"Physik",
+      "Kuerzel":"P",
+      "Idlehrer":"physiklehrer",
+      "Idwunsch":"physikwunsch",
+      "Lehrer": [
+        {"Lehrer": "BU"},
+        {"Lehrer": "GI"},
+        {"Lehrer": "FL"}
+      ]
+    }
+  ,
+    {
+      "Fach":"Religion",
+      "Kuerzel":"R",
+      "Idlehrer":"religionlehrer",
+      "Idwunsch":"religionwunsch",
+      "Lehrer": [
+        {"Lehrer": "BED"},
+        {"Lehrer": "GE"}
+      ]
+    }
+  ,
+    {
+      "Fach":"Powi",
+      "Kuerzel":"PW",
+      "Idlehrer":"powilehrer",
+      "Idwunsch":"powiwunsch",
+      "Lehrer": [
+        {"Lehrer": "FU"},
+        {"Lehrer": "KU"},
+        {"Lehrer": "SCH"},
+        {"Lehrer": "HA"}
+      ]
+    }
+  ,
+    {
+      "Fach":"Geschichte",
+      "Kuerzel":"G",
+      "Idlehrer":"geschichtelehrer",
+      "Idwunsch":"geschichtewunsch",
+      "Lehrer": [
+        {"Lehrer": "KU"},
+        {"Lehrer": "KA"},
+        {"Lehrer": "FU"},
+        {"Lehrer": "GE"}
+      ]
+    }
+
+
+    ]
+
+
+}

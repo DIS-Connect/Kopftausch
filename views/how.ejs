@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+
+    <% include templates/includeCSS.ejs %>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+
+    <title>Kopftausch ARG</title>
+</head>
+<body>
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+        <div id="kopftausch"><a>Kopftausch</a></div>
+    </div>
+    <div class="nav-content">
+        <ul class="tabs tabs-transparent">
+            <% if(!firstlogin) { %>
+            <li class="tab"><a href="settings">Bedingungen</a></li>
+            <% } else {%>
+
+            <% if(loggedIn) { %>
+            <li class="tab"><a href="settings">Einstellungen</a></li>
+            <li class="tab"><a href="matches">Matches</a></li>
+            <% } else { %>
+            <li class="tab"><a href="login">Login</a></li>
+            <% } %>
+
+            <% }%>
+            <li class="tab onsite"><a>So GEHT'S</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+
+
+    <div class="row" class="mitte">
+        <div class="col s12 m8 offset-m2 ">
+            <div class="card">
+                <div class="card-image">
+                    <img src="/images/login.PNG">
+
+                </div>
+                <div class="card-content">
+                    <p>Schritt 1: Logge dich mit deinem Nutzernamen und Passwort ein.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m8 offset-m2 ">
+            <div class="card">
+                <div class="card-image">
+                    <img src="/images/name.PNG">
+
+                </div>
+                <div class="card-content">
+                    <p>Schritt 2: Gebe hier deinen Namen an, damit die anderen Nutzer wissen wer du bist.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m8 offset-m2 ">
+            <div class="card">
+                <div class="card-image">
+                    <img src="/images/tausche.PNG">
+
+                </div>
+                <div class="card-content">
+                    <p>Schritt 3: Gebe an, bei welchen Lehrern du bist und zu welchen du gerne möchtest. Du kannst ein Fach auch leer lassen.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m8 offset-m2 ">
+            <div class="card">
+                <div class="card-image">
+                    <img src="/images/speichern.PNG">
+
+                </div>
+                <div class="card-content">
+                    <p>Schritt 4: Speichern.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m8 offset-m2 ">
+            <div class="card">
+                <div class="card-image">
+                    <img src="/images/matches.PNG">
+
+                </div>
+                <div class="card-content">
+                    <p>Schritt 5: Schaue dir an mit wem und zu welchem Lehrer du tauschen kannst. Um zu vermeiden, dass du angeschrieben wirst obwohl du schon getauscht hast lösche einfach den Tausch in den Einstellungen.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</main>
+
+<% include templates/footer.ejs %>
+<!-- Skripte -->
+<script src="jquery-3.3.1.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script> -->
+<% include templates/javascript.ejs %>
+</body>
+</html>

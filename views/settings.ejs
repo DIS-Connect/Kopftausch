@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+
+    <% include templates/includeCSS.ejs %>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <title>Kopftausch ARG</title>
+
+</head>
+
+<body>
+
+
+
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+        <div id="kopftausch">
+            <a>Kopftausch</a>
+        </div>
+
+    </div>
+    <div class="nav-content">
+        <ul class="tabs tabs-transparent">
+            <li class="tab"><a href="" class="onsite">Einstellungen</a></li>
+            <li class="tab"><a href="matches">Matches</a></li>
+            <% if(master){%>
+            <li class="tab"><a href="master">M</a></li>
+            <%}%>
+            <li class="tab" style="float:right"><a href="/logout">Abmelden</a></li>
+        </ul>
+    </div>
+</nav>
+<% if(message !== ""){ %>
+
+
+
+<div class="red">
+   <h5 class="center-align vertical-align" style="padding: 0 .656rem; margin: .656rem 0; color:white"><%= message %></h5>
+</div>
+<% }%>
+
+
+
+<div class="card mitte">
+    <div class="card-content">
+        <span class="card-title">Dein Name:</span>
+        <div id="name" class="input-field">
+            <input type="text" id="name_input" class="validate" name="custom_name">
+            <label for="name_input">Bitte eingeben</label>
+        </div>
+    </div>
+    <div class="card-action">
+        <a style="cursor:pointer" id="name_submit">Speichern</a>
+
+    </div>
+</div>
+
+<!-- DYNAMIC -->
+<div class="dynamic" id="dynamic_content" >
+    <table id="kurstabelle" class="mitte">
+
+        <thead>
+        <tr>
+            <th>Fach</th>
+            <th>Lehrer</th>
+            <th>Wunschlehrer</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% kurse.Kurse.forEach(function(fach){ %>
+        <tr>
+            <td>
+                <b><%= fach.Fach %></b>
+            </td>
+            <td>
+                <div class="input-field col s5">
+                    <select id= <%= fach.Idlehrer %> class="lehrer">
+                        <option value="0" selected>Keine Wahl</option>
+                        <% fach.Lehrer.forEach(function(lehrer){ %>
+                        <option value=<%= lehrer.Lehrer %>_<%= fach.Kuerzel %>><%= lehrer.Lehrer %></option>
+
+                        <% }); %>
+
+                    </select>
+
+                </div>
+            </td>
+            <td>
+                <div class="input-field col s10">
+                    <select multiple id= <%= fach.Idwunsch %> class="wunsch">
+
+                        <% fach.Lehrer.forEach(function(lehrer){ %>
+                        <option value=<%= lehrer.Lehrer %>_<%= fach.Kuerzel %> ><%= lehrer.Lehrer %></option>
+
+                        <% }); %>
+                    </select>
+
+                </div>
+            </td>
+
+        </tr>
+
+        <% }); %>
+
+        </tbody>
+
+    </table>
+</div>
+<button class="btn-large waves-effect waves-green green darken-2" id="speichern">SPEICHERN</button>
+<% include templates/footer.ejs %>
+<!-- END DYNAMIC -->
+
+<!-- Skripte -->
+<% include templates/javascript.ejs %>
+
+
+<script>
+
+    $(document).ready(() => {
+        shownick();
+        showfields();
+        $('select').formSelect();
+
+        //  Event Handler
+        $('#name_submit').click(() => {
+            postData();
+        });
+      //  if("<%= message %>" !== "") {
+       //     alert("<%= message %>");
+      //  }
+    })
+
+    var showtoast = true;
+    //  AJAX
+    function postData() {
+
+        if ($("#name_input").val().length < 3) {
+            alert("Du musst dir einen Anzeigenamen geben, der mindestens 3 Zeichen lang ist, bevor du speichern kannst.");
+            shownick();
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/api/settings/nick',
+                data: {
+                    'nick': $('#name_input').val()
+                },
+                success: (data) => {
+                    if(showtoast) {
+                        M.toast({html: 'Name gespeichert!'})
+                    }
+                },
+                error: (err) => {
+
+                    console.log('Fehler aufgetreten: ', err);
+                }
+            });
+        }
+    }
+
+    $('#speichern').click(() => {
+        speichern();
+        postData();
+    });
+
+    function shownick() {
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/settings/getnick',
+            success: (data) => {
+                $('#name_input').val(data);
+                M.updateTextFields();
+            },
+            error: (err) => {
+
+                console.log('Fehler aufgetreten: ', err);
+            }
+        });
+    }
+    function speichern() {
+        var tausch = [];
+        var fehler = false;
+        showtoast = false;
+
+        <% kurse.Kurse.forEach(function(fach){ %>
+
+        var <%= fach.Idlehrer %> =
+        $("#<%= fach.Idlehrer %>").val();
+        var <%= fach.Idwunsch %> =
+        $("#<%= fach.Idwunsch %>").val();
+
+        if (<%= fach.Idlehrer %> != 0 && <%= fach.Idwunsch %>.length != 0) {
+            if (<%= fach.Idwunsch %>.includes(<%= fach.Idlehrer %>)){
+
+                alert("Sie wollen bei " + <%= fach.Idlehrer %>.split("_")[0] + " im Fach <%= fach.Fach %> bleiben? Bitte ändern Sie diese Einstellung.");
+
+                fehler = true;
+
+            } else {
+                tausch.push({
+                    lehrer: <%= fach.Idlehrer %> +"",
+                    wunsch: <%= fach.Idwunsch %>
+                })
+                console.log(tausch)
+            }
+
+        }else {
+            if(<%= fach.Idlehrer %> === "0" && <%= fach.Idwunsch %>.length !== 0 ){
+                alert("Es muss immer ein Lehrer und ein Wunschlehrer bei einem Fach ausgewählt sein. Diese ist bei <%= fach.Fach %> nicht der Fall.");
+                fehler = true;
+            }else if( <%= fach.Idlehrer %> !== "0" && <%= fach.Idwunsch %>.length === 0){
+                alert("Es muss immer ein Lehrer und ein Wunschlehrer bei einem Fach ausgewählt sein. Diese ist bei <%= fach.Fach %> nicht der Fall.");
+                fehler = true;
+            }
+        }
+        <% }); %>
+
+        if ($("#name_input").val().length < 3) {
+           $('html, body').animate({ scrollTop: 0}, 'slow');
+           fehler = true
+        }
+        if (!fehler) {
+            console.log(tausch)
+            $.ajax({
+                type: 'POST',
+                url: '/api/settings/kurse_speichern',
+                contentType: "application/json",
+                data: JSON.stringify(tausch),
+                success: (data) => {
+                    window.location.href = "/matches";
+                },
+                error: (err) => {
+                    console.log('Fehler aufgetreten: ', err);
+                }
+            });
+        }
+    }
+
+    function showfields() {
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/settings/getfields',
+            success: (data) => {
+
+                data.forEach(function(tausch){
+                    var select_lehrer = $($(".lehrer option[value="+ tausch.lehrer+"]")[0].parentElement);
+
+                    select_lehrer.val(tausch.lehrer);
+                    select_lehrer.formSelect();
+
+                    if(tausch.wunsch.length >0) {
+                        var select_wunsch = $($(".wunsch option[value=" + tausch.wunsch[0] + "]")[0].parentElement);
+
+                        select_wunsch.val(tausch.wunsch);
+                        select_wunsch.formSelect();
+
+                    }
+
+
+                });
+
+
+            },
+            error: (err) => {
+                console.log('Fehler aufgetreten: ', err);
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

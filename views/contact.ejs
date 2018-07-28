@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+
+    <% include templates/includeCSS.ejs%>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+
+    <title>Kopftausch ARG</title>
+</head>
+
+<body>
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+        <div id="kopftausch"> <a> Kopftausch </a> </div>
+    </div>
+    <div class="nav-content">
+        <ul class="tabs tabs-transparent">
+            <% if(!firstlogin) { %>
+            <li class="tab"><a href="settings">Bedingungen</a></li>
+            <% } else {%>
+
+            <% if(loggedIn) { %>
+            <li class="tab"><a href="settings">Einstellungen</a></li>
+            <li class="tab"><a href="matches">Matches</a></li>
+            <% } else { %>
+            <li class="tab"><a href="login">Login</a></li>
+            <% } %>
+
+            <% }%>
+            <li class="tab" ><a class="onsite">Kontakt</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+
+</main>
+
+
+<% include templates/footer.ejs%>
+
+
+
+<!-- Skripte -->
+<script src="jquery-3.3.1.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script> -->
+
+<% include templates/javascript.ejs%>
+
+<script type="text/ecmascript">
+    $('.card-action').click(function() {
+        $('form').submit();
+    });
+    $(document).keypress(function(e) {
+        if (e.which === 13) $('form').submit();
+    });
+</script>
+</body>
+</html>
